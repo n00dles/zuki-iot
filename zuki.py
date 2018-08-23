@@ -4,6 +4,11 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
+
+##############################################
+#### connect to DB, flaskapp #################
+##############################################
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://zuki:MyPassW0rd@localhost/flaskapp'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
