@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+        {% block header%}
+        <section class="jumbotron text-center">
+            <div class="container">
+                <h1 class="jumbotron-heading">Welcome</h1>
+                <p class="lead text-muted">This is a test Python/Flask Application for monitoring IOT devices around my home. <br/>
+                It is very much WIP.</p>
+            </div>
+        </section>
+        {% endblock %}
+
+      {% block main %}
+
+      <div class="row">
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <img class="card-img-top" src="{{ url_for('static', filename='image.svg') }}" alt="Card image cap">
+                    <div class="card-body">
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content.
+                            This content is a little bit longer.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                            </div>
+                            <small class="text-muted">9 mins</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+      {% endblock %}
