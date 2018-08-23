@@ -26,9 +26,7 @@ class Devices(db.Model):
 def index():
     rt = ''
     records = Devices.query.all()
-    for i in records:
-        rt += i.name + '<br/>'
-    return render_template('index.html')
+    return render_template('index.html', records = records)
 
 @app.route('/add')
 def add():
