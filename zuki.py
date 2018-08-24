@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 app = Flask(__name__)
-
+app.config['SECRET_KEY'] = 'my_super_secret_key'
 
 ##############################################
 #### connect to DB, flaskapp #################
@@ -20,7 +20,18 @@ class Devices(db.Model):
     desc = db.Column(db.String(100))
     devtype = db.Column(db.String(30))
     ipaddress = db.Column(db.String(15))
-    
+
+class Instances(db.Model):
+    __tablename__ = "instances"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(30))
+    desc = db.Column(db.String(100))
+    itype = db.Column(db.String(30))
+    device = db.Column(db.Integer,db.ForeignKey('devices.id'), nullable=False)
+    direction = db.Column(db.String(5))
+    url = db.Column(db.String(100))
+
+
 
 @app.route('/')
 def index():
@@ -30,6 +41,7 @@ def index():
 
 @app.route('/add')
 def add():
+
     return "Add Page"
 
 @app.route('/home')
