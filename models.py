@@ -18,6 +18,7 @@ class Devices(db.Model):
     desc = db.Column(db.String(100))
     devtype = db.Column(db.String(30))
     ipaddress = db.Column(db.String(15))
+    display = db.Column(db.Boolean)
 
 class Instances(db.Model):
     __tablename__ = "instances"
