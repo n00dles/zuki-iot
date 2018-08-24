@@ -1,0 +1,55 @@
+{% extends "base.html" %} {% block header%}
+<section class="jumbotron text-center">
+	<div class="container">
+		<h1 class="jumbotron-heading">Add a new Device</h1>
+	</div>
+</section>
+{% endblock %} {% block main %}
+
+<form class="needs-validation" novalidate>
+
+	<div class="mb-3">
+		<label for="name">Device Name</label>
+		<div class="input-group">
+			<input type="text" class="form-control" id="name" placeholder="Device Name" required>
+			<div class="invalid-feedback" style="width: 100%;">
+				Please provide a device name.
+			</div>
+		</div>
+	</div>
+
+	<div class="mb-3">
+		<label for="desc">Description</label>
+		<div class="input-group">
+			<input type="text" class="form-control" id="desc" placeholder="Description" required>
+			<div class="invalid-feedback" style="width: 100%;">
+				Please provide a description.
+			</div>
+		</div>
+	</div>
+	
+	<div class="mb-3">
+		<label for="devtype">Device Type (esp8266, RGB light etc.. )</label>
+		<div class="input-group">
+			<input type="text" class="form-control" id="devtype" placeholder="Device Type" required>
+			<div class="invalid-feedback" style="width: 100%;">
+				Please provide a device type.
+			</div>
+		</div>
+	</div>
+	
+	<div class="mb-3">
+		<label for="ipaddress">IP Address</label>
+		<div class="input-group">
+			<input type="text" class="form-control" id="ipaddress" placeholder="IP Address" required>
+			<div class="invalid-feedback" style="width: 100%;">
+				Please provide an IP address
+			</div>
+		</div>
+	</div>
+
+	<hr class="mb-4">
+	<button class="btn btn-primary btn-lg btn-block" type="submit">Add Device</button>
+</form>
+
+{% endblock %}
