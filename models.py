@@ -13,11 +13,13 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 class Devices(db.Model):
+    __tablename__ = "devices"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30))
     desc = db.Column(db.String(100))
     devtype = db.Column(db.String(30))
     ipaddress = db.Column(db.String(15))
+    hashkey = db.Column(db.string(100))
     display = db.Column(db.Boolean)
 
 class Instances(db.Model):
