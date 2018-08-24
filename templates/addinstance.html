@@ -37,12 +37,17 @@
 			</div>
 		</div>
 	</div>
-	
+    
 	<div class="mb-3">
 		<label for="ipaddress">Parent Device </label>
 		<div class="input-group">
-			<input type="text" class="form-control" id="device" placeholder="Select Device" required>
-			<div class="invalid-feedback" style="width: 100%;">
+                <select class="custom-select d-block w-100" id="device" required>
+                    <option value="">Choose...</option>
+                    {% for record in context.records %}
+                    <option value="{{record.id}}">{{ record.name }}</option>
+                    {% endfor %}
+                </select>
+            <div class="invalid-feedback" style="width: 100%;">
 				Please select a device
 			</div>
 		</div>

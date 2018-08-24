@@ -6,12 +6,12 @@
 </section>
 {% endblock %} {% block main %}
 
-<form class="needs-validation" novalidate>
+<form class="needs-validation" action="/processdevice" novalidate method="POST">
 
 	<div class="mb-3">
 		<label for="name">Device Name</label>
 		<div class="input-group">
-			<input type="text" class="form-control" id="name" placeholder="Device Name" required>
+			<input type="text" class="form-control" name="name" id="name" placeholder="Device Name" required>
 			<div class="invalid-feedback" style="width: 100%;">
 				Please provide a device name.
 			</div>
@@ -21,7 +21,7 @@
 	<div class="mb-3">
 		<label for="desc">Description</label>
 		<div class="input-group">
-			<input type="text" class="form-control" id="desc" placeholder="Description" required>
+			<input type="text" class="form-control" name="desc" id="desc" placeholder="Description" required>
 			<div class="invalid-feedback" style="width: 100%;">
 				Please provide a description.
 			</div>
@@ -31,7 +31,7 @@
 	<div class="mb-3">
 		<label for="devtype">Device Type (esp8266, RGB light etc.. )</label>
 		<div class="input-group">
-			<input type="text" class="form-control" id="devtype" placeholder="Device Type" required>
+			<input type="text" class="form-control" name="devtype" id="devtype" placeholder="Device Type" required>
 			<div class="invalid-feedback" style="width: 100%;">
 				Please provide a device type.
 			</div>
@@ -41,7 +41,7 @@
 	<div class="mb-3">
 		<label for="ipaddress">IP Address</label>
 		<div class="input-group">
-			<input type="text" class="form-control" id="ipaddress" placeholder="IP Address" required>
+			<input type="text" class="form-control"  name="ipaddress" id="ipaddress" placeholder="IP Address" required>
 			<div class="invalid-feedback" style="width: 100%;">
 				Please provide an IP address
 			</div>
