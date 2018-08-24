@@ -19,7 +19,7 @@ class Devices(db.Model):
     desc = db.Column(db.String(100))
     devtype = db.Column(db.String(30))
     ipaddress = db.Column(db.String(15))
-    hashkey = db.Column(db.string(100))
+    hashkey = db.Column(db.String(100))
     display = db.Column(db.Boolean)
 
 class Instances(db.Model):
@@ -31,3 +31,10 @@ class Instances(db.Model):
     device = db.Column(db.Integer,db.ForeignKey('devices.id'), nullable=False)
     direction = db.Column(db.String(5))
     url = db.Column(db.String(100))
+
+class Devicedata(db.Model):
+    __tablename__ = "devicedata"
+    id = db.Column(db.Integer, primary_key=True)
+    device = db.Column(db.Integer,db.ForeignKey('instances.id'), nullable=False)
+    data = db.Column(db.String(100))
+    timestamp = db.Column(db.Integer)
