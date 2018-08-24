@@ -1,9 +1,11 @@
-from zuki import app
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy 
 
 ##############################################
 #### connect to DB, flaskapp #################
 ##############################################
+
+app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://zuki:MyPassW0rd@localhost/flaskapp'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
