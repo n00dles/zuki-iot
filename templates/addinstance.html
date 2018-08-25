@@ -6,12 +6,12 @@
 </section>
 {% endblock %} {% block main %}
 
-<form class="needs-validation" novalidate>
+<form class="needs-validation" action="/processinstance" novalidate method="POST">
 
 	<div class="mb-3">
 		<label for="name">Instance Name</label>
 		<div class="input-group">
-			<input type="text" class="form-control" id="name" placeholder="Device Name" required>
+			<input type="text" class="form-control" name="name" id="name" placeholder="Instance Name" required>
 			<div class="invalid-feedback" style="width: 100%;">
 				Please provide a device name.
 			</div>
@@ -21,7 +21,7 @@
 	<div class="mb-3">
 		<label for="desc">Instance Description</label>
 		<div class="input-group">
-			<input type="text" class="form-control" id="desc" placeholder="Description" required>
+			<input type="text" class="form-control" name="desc" id="desc" placeholder="Instance Description" required>
 			<div class="invalid-feedback" style="width: 100%;">
 				Please provide a description.
 			</div>
@@ -31,7 +31,7 @@
 	<div class="mb-3">
 		<label for="itype">Instance Type (temp, humidity, switch )</label>
 		<div class="input-group">
-			<input type="text" class="form-control" id="itype" placeholder="Device Type" required>
+			<input type="text" class="form-control" name="itype" id="itype" placeholder="Device Type" required>
 			<div class="invalid-feedback" style="width: 100%;">
 				Please provide a Instance type.
 			</div>
@@ -41,7 +41,7 @@
 	<div class="mb-3">
 		<label for="ipaddress">Parent Device </label>
 		<div class="input-group">
-                <select class="custom-select d-block w-100" id="device" required>
+                <select class="custom-select d-block w-100" name="device" id="device" required>
                     <option value="">Choose...</option>
                     {% for record in context.records %}
                     <option value="{{record.id}}">{{ record.name }}</option>
@@ -53,10 +53,25 @@
 		</div>
 	</div>
 
+	<div class="mb-3">
+		<label for="ipaddress">Direction </label>
+		<div class="input-group">
+                <select class="custom-select d-block w-100" name="direction" id="direction" required>
+                    <option value="">Choose...</option>
+					<option value="in">In</option>
+					<option value="out">Out</option>
+                </select>
+            <div class="invalid-feedback" style="width: 100%;">
+				Please select a direction
+			</div>
+		</div>
+	</div>
+
+
     <div class="mb-3">
         <label for="url">URL </label>
         <div class="input-group">
-            <input type="text" class="form-control" id="url" placeholder="URL to retrieve data" required>
+            <input type="text" class="form-control" name="url" id="url" placeholder="URL to retrieve data" required>
             <div class="invalid-feedback" style="width: 100%;">
                 Please add a URL 
             </div>

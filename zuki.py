@@ -35,10 +35,21 @@ def processd():
     context = { 'menu': 'home', 'records' : records}
     return render_template('index.html', context = context)
 
-@app.route("/processinstance")
+@app.route("/processinstance", methods=["POST"])
 def processi():
-    return ""
-
+    name = request.form['name']
+    desc = request.form['desc']
+    itype = request.form['itype']
+    device = request.form['device']
+    direction = request.form['direction']
+    url = request.form['url']
+    
+    instance = Instances(name=name, desc=desc, itype=itype, device=device, direction=direction, url=url)
+    db.session.add(instance)
+    db.session.commit()
+    records = Devices.query.filter(Devices.display==1)
+    context = { 'menu': 'home', 'records' : records}
+    return render_template('index.html', context = context)
 
 @app.route('/addinstance')
 def addinstance():
