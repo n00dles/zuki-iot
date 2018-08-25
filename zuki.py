@@ -1,6 +1,10 @@
 from flask import Flask, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from flask_socketio import SocketIO
+
 from models import *
+
+socketio = SocketIO(app)
 
 ###########################################
 # i know the routing can be done better 
@@ -33,7 +37,7 @@ def processd():
     records = db.session.query(Devices.name, Devices.desc, Devices.ipaddress, db.func.count(Instances.device).label("num")).outerjoin(Instances).group_by(Devices.id).filter(Devices.display==1)
     context = { 'menu': 'home', 'records' : records}
     return render_template('index.html', context = context)
-    
+
 @app.route("/processinstance", methods=["POST"])
 def processi():
     name = request.form['name']
@@ -62,5 +66,5 @@ def addinstance():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
-
+    #app.run(debug=True)
+    socketio.run(app)
