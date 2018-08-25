@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-from flask_sqlalchemy import SQLAlchemy 
+from flask_sqlalchemy import SQLAlchemy
 from models import *
 
 ###########################################
@@ -9,8 +9,7 @@ from models import *
 
 @app.route('/')
 def index():
-
-    records = Devices.query.filter(Devices.display==1)
+    records = db.session.query(Devices.name, Devices.desc, Devices.ipaddress, db.func.count(Instances.device).label("num")).outerjoin(Instances).group_by(Devices.id).filter(Devices.display==1)
     context = { 'menu': 'home', 'records' : records}
     return render_template('index.html', context = context)
 
@@ -31,10 +30,10 @@ def processd():
     device = Devices(name=name, desc=desc, devtype=devtype, ipaddress=ipaddress, hashkey=hashkey, display=display)
     db.session.add(device)
     db.session.commit()
-    records = Devices.query.filter(Devices.display==1)
+    records = db.session.query(Devices.name, Devices.desc, Devices.ipaddress, db.func.count(Instances.device).label("num")).outerjoin(Instances).group_by(Devices.id).filter(Devices.display==1)
     context = { 'menu': 'home', 'records' : records}
     return render_template('index.html', context = context)
-
+    
 @app.route("/processinstance", methods=["POST"])
 def processi():
     name = request.form['name']
@@ -47,7 +46,7 @@ def processi():
     instance = Instances(name=name, desc=desc, itype=itype, device=device, direction=direction, url=url)
     db.session.add(instance)
     db.session.commit()
-    records = Devices.query.filter(Devices.display==1)
+    records = db.session.query(Devices.name, Devices.desc, Devices.ipaddress, db.func.count(Instances.device).label("num")).outerjoin(Instances).group_by(Devices.id).filter(Devices.display==1)
     context = { 'menu': 'home', 'records' : records}
     return render_template('index.html', context = context)
 
