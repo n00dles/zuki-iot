@@ -1,10 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from flask_socketio import SocketIO
 
 from models import *
-
-socketio = SocketIO(app)
 
 ###########################################
 # i know the routing can be done better 
@@ -62,9 +59,5 @@ def addinstance():
 
 
 
-
-
-
 if __name__ == '__main__':
-    #app.run(debug=True)
-    socketio.run(app)
+    app.run(debug=True)
