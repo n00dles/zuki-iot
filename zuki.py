@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
-
+import string, random
 from models import *
 
 ###########################################
@@ -25,7 +25,7 @@ def processd():
     desc = request.form['desc']
     devtype = request.form['devtype']
     ipaddress = request.form['ipaddress']
-    hashkey="secret"
+    hashkey=hashkey(20)
     display = 1
 
     device = Devices(name=name, desc=desc, devtype=devtype, ipaddress=ipaddress, hashkey=hashkey, display=display)
@@ -62,6 +62,8 @@ def addinstance():
     context = { 'menu': 'addinstance', 'records' : records}
     return render_template('addinstance.html', context = context)
 
+def hashkey(length = 64):
+    return ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase + string.digits) for _ in range(length))
 
 
 if __name__ == '__main__':
