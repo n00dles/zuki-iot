@@ -1,10 +1,11 @@
 {% extends "base.html" %} {% block header%}
 <section class="jumbotron text-center">
 	<div class="container">
-		<h1 class="jumbotron-heading">Add a new Device</h1>
+		<h1 class="jumbotron-heading">View Data</h1>
 	</div>
 </section>
-{% endblock %} {% block main %}
+{% endblock %} 
+{% block main %}
 
 <form class="needs-validation" action="/processdevice" novalidate method="POST">
 

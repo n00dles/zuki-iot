@@ -8,6 +8,9 @@ from models import *
 # for now it works.
 ###########################################
 
+## string of 64 random ascii chars
+app_salt = 'ms7kmVj9svyy5dERCdcJ57zKFpgE29YGoUHiQMR3eEIuhB493XhYiPcjRLxbcCls' 
+
 @app.route('/')
 def index():
     records = db.session.query(Devices.name, Devices.desc, Devices.ipaddress, db.func.count(Instances.device).label("num")).outerjoin(Instances).group_by(Devices.id).filter(Devices.display==1)
@@ -51,10 +54,21 @@ def processi():
     context = { 'menu': 'home', 'records' : records}
     return render_template('index.html', context = context)
 
-@app.route("/adddata/<instance>")
-def adddata(device):
-    return ''
+@app.route("/adddata", methods=['POST','GET'])
+def adddata():
+    device = request.form['device']
+    data = request.form['data']
+    timestamp = request.form['timestamp']
+    devicedata = Devicedata(device=device, data=data, timestamp=timestamp) 
+    db.session.add(devicedata)
+    db.session.commit()
+    return 'ok'
 
+@app.route("/viewdata")
+def viewdata():
+    records = Devicedata.query.all()
+    context = { 'menu': 'home', 'records' : records}
+    return render_template('viewdata.html', context = context)
 
 @app.route('/addinstance')
 def addinstance():
