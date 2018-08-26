@@ -51,9 +51,14 @@ def processi():
     context = { 'menu': 'home', 'records' : records}
     return render_template('index.html', context = context)
 
+@app.route("/adddata/<instance>")
+def adddata(device):
+    return ''
+
+
 @app.route('/addinstance')
 def addinstance():
-    records = Devices.query.filter(Devices.display==1)
+    records = Devices.query.all()
     context = { 'menu': 'addinstance', 'records' : records}
     return render_template('addinstance.html', context = context)
 
