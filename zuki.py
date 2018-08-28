@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request,json, jsonify
 from flask_sqlalchemy import SQLAlchemy
-import string, random
+import string, random, datetime, time
 from models import *
+from security import * 
+
 
 ###########################################
 # i know the routing can be done better 
@@ -56,12 +58,27 @@ def processi():
 
 @app.route("/adddata", methods=['POST','GET'])
 def adddata():
-    device = request.form['device']
-    data = request.form['data']
-    timestamp = request.form['timestamp']
-    devicedata = Devicedata(device=device, data=data, timestamp=timestamp) 
-    db.session.add(devicedata)
-    db.session.commit()
+    if request.form['testdata']:
+        testjson = request.form['testdata']
+        d = json.loads(testjson)
+        device = d['device']
+        hashkey = d['hashkey']
+        data = d['data']
+        timestamp = int(time.time())
+        dev = db.session.query(Devices).filter(Devices.hashkey == hashkey, Devices.id == device).first()
+        if dev is None:
+            return "auth error"
+        for instance in data:
+            dev = db.session.query(Instances).filter(Instances.id == instance[0]).first()
+            if dev is None:
+                return "instance error"
+            print(instance[0])
+            
+        print(dev)
+        print(timestamp)
+    #devicedata = Devicedata(device=device, data=data, timestamp=timestamp) 
+    #db.session.add(devicedata)
+    #db.session.commit()
     return 'ok'
 
 @app.route("/viewdata")
@@ -75,9 +92,6 @@ def addinstance():
     records = Devices.query.all()
     context = { 'menu': 'addinstance', 'records' : records}
     return render_template('addinstance.html', context = context)
-
-def hashkey(length = 64):
-    return ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase + string.digits) for _ in range(length))
 
 
 if __name__ == '__main__':
