@@ -61,6 +61,7 @@ def adddata():
     if request.form.get('data',None):
         testjson = request.form['data']
         d = json.loads(testjson)
+        print(d)
         device = d['device']
         hashkey = d['hashkey']
         data = d['data']
@@ -72,8 +73,11 @@ def adddata():
             dev = db.session.query(Instances).filter(Instances.id == instance[0]).first()
             if dev is None:
                 return "instance error"
-            print(instance[0])
-            
+            idata = d['data'][instance[0]]
+            idev = instance[0]
+            devicedata = Devicedata(device=idev, data=idata, timestamp=timestamp) 
+            db.session.add(devicedata)
+            db.session.commit()
         print(dev)
         print(timestamp)
     else:
