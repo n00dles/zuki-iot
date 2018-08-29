@@ -58,8 +58,8 @@ def processi():
 
 @app.route("/adddata", methods=['POST','GET'])
 def adddata():
-    if request.form['testdata']:
-        testjson = request.form['testdata']
+    if request.form.get('data',None):
+        testjson = request.form['data']
         d = json.loads(testjson)
         device = d['device']
         hashkey = d['hashkey']
@@ -76,6 +76,8 @@ def adddata():
             
         print(dev)
         print(timestamp)
+    else:
+        return "No data"
     #devicedata = Devicedata(device=device, data=data, timestamp=timestamp) 
     #db.session.add(devicedata)
     #db.session.commit()
