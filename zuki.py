@@ -58,6 +58,8 @@ def processi():
 
 @app.route("/adddata", methods=['POST','GET'])
 def adddata():
+    request_json     = request.get_json()
+    print(request_json)
     if request.form.get('data',None):
         testjson = request.form['data']
         d = json.loads(testjson)
@@ -93,4 +95,4 @@ def addinstance():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
