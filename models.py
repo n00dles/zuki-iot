@@ -1,5 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy 
+from flask_user import login_required, UserManager, UserMixin, SQLAlchemyAdapter
+
 
 ##############################################
 #### connect to DB, flaskapp #################
@@ -9,8 +11,20 @@ app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://zuki:MyPassW0rd@localhost/flaskapp'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['CSRF_ENABLED'] = True
 
 db = SQLAlchemy(app)
+
+class User(db.Model, UserMixin): 
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(50), nullable=False, unique = True)
+    password = db.Column(db.String(255), nullable=False, server_default='')
+    active = db.Column(db.Boolean, nullable=False, server_default='1')
+
+#db_adapter = SQLAlchemy(db, User)
+#user_manager = UserManager(db_adapter, app) 
+
+
 
 class Devices(db.Model):
     __tablename__ = "devices"

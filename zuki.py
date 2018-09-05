@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request,json, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from flask_user import login-required, Usermanager, UserMixin, SQLAlchemyAdapter
+from flask_user import login_required, Usermanager, UserMixin, SQLAlchemyAdapter
 import string, random, datetime, time
 from models import *
 from security import * 
