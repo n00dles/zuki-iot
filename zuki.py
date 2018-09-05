@@ -56,30 +56,28 @@ def processi():
     context = { 'menu': 'home', 'records' : records}
     return render_template('index.html', context = context)
 
-@app.route("/adddata", methods=['POST','GET'])
-def adddata():
-    request_json     = request.get_json()
-    print(request_json)
+@app.route("/adddata", methods=['POST', 'GET'])
+def addd():
     if request.form.get('data',None):
-        testjson = request.form['data']
-        d = json.loads(testjson)
-        device = d['device']
-        hashkey = d['hashkey']
-        data = d['data']
+        print(request.form.get('data'))
+        device = request.form['device']
+        hashkey = request.form['hashkey']
+        datai = request.form['datai']
+        data = request.form['data']
         timestamp = int(time.time())
         dev = db.session.query(Devices).filter(Devices.hashkey == hashkey, Devices.id == device).first()
         if dev is None:
             return "auth error"
-        for instance in data:
-            dev = db.session.query(Instances).filter(Instances.id == instance[0]).first()
-            if dev is None:
-                return "instance error"
-            devicedata = Devicedata(device=instance[0], data=d['data'][instance[0]], timestamp=timestamp) 
-            db.session.add(devicedata)
-            db.session.commit()
+        dev = db.session.query(Instances).filter(Instances.id == datai).first()
+        if dev is None:
+            return "instance error"
+        devicedata = Devicedata(device=datai, data=data, timestamp=timestamp) 
+        db.session.add(devicedata)
+        db.session.commit()
     else:
         return "No data"
     return 'ok'
+
 
 @app.route("/viewdata")
 def viewdata():
