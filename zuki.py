@@ -23,6 +23,10 @@ def index():
 
 @app.route('/getinstance/<id>')
 def getinstance(id):
+    print("getting ID " + str(id))
+    current_value = Devicedata.query.filter(Devicedata.device==str(id)).order_by(Devicedata.timestamp.desc()).first()
+    print(current_value.data)
+    return "<h1>" + str(current_value.data) + "&deg;c</h1><br/><time>"+time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(current_value.timestamp))+"</time>"
     pass
 
 @app.route('/adddevice')
