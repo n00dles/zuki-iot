@@ -16,8 +16,9 @@ app_salt = 'ms7kmVj9svyy5dERCdcJ57zKFpgE29YGoUHiQMR3eEIuhB493XhYiPcjRLxbcCls'
 
 @app.route('/')
 def index():
-    records = db.session.query(Devices.name, Devices.desc, Devices.ipaddress, db.func.count(Instances.device).label("num")).outerjoin(Instances).group_by(Devices.id).filter(Devices.display==1)
-    context = { 'menu': 'home', 'records' : records}
+    records = db.session.query(Devices.name, Instances.id, Devices.desc, Devices.ipaddress, db.func.count(Instances.device).label("num")).outerjoin(Instances).group_by(Devices.id).filter(Devices.display==1)
+    instances = Instances.query.all()
+    context = { 'menu': 'home', 'records' : records, 'instances': instances}
     return render_template('index.html', context = context)
 
 @app.route('/getinstance/<id>')
