@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request,json, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from flask_user import login_required, Usermanager, UserMixin, SQLAlchemyAdapter
+from flask_user import login_required, UserManager, UserMixin, SQLAlchemyAdapter
 import string, random, datetime, time
 from models import *
 from security import * 
@@ -19,6 +19,10 @@ def index():
     records = db.session.query(Devices.name, Devices.desc, Devices.ipaddress, db.func.count(Instances.device).label("num")).outerjoin(Instances).group_by(Devices.id).filter(Devices.display==1)
     context = { 'menu': 'home', 'records' : records}
     return render_template('index.html', context = context)
+
+@app.route('/getinstance/<id>')
+def getinstance(id):
+    pass
 
 @app.route('/adddevice')
 def adddevice():

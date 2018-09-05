@@ -45,6 +45,7 @@ class Instances(db.Model):
     device = db.Column(db.Integer,db.ForeignKey('devices.id'), nullable=False)
     direction = db.Column(db.String(5))
     url = db.Column(db.String(100))
+    display = db.Column(db.Boolean,server_default='1' )
 
 class Devicedata(db.Model):
     __tablename__ = "devicedata"
