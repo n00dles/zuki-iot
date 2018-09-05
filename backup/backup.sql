@@ -30,7 +30,7 @@ CREATE TABLE `devicedata` (
   PRIMARY KEY (`id`),
   KEY `device` (`device`),
   CONSTRAINT `devicedata_ibfk_1` FOREIGN KEY (`device`) REFERENCES `instances` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,6 +39,7 @@ CREATE TABLE `devicedata` (
 
 LOCK TABLES `devicedata` WRITE;
 /*!40000 ALTER TABLE `devicedata` DISABLE KEYS */;
+INSERT INTO `devicedata` VALUES (1,1,'23.3',2147483647),(2,1,'23.4',2147483647),(3,1,'23.4',1535304092),(4,1,'23.4',1535304105),(5,1,'25.7',1535310033),(6,1,'25.9',1535310052),(7,1,'25.3',1535310105),(8,1,'99',1535312501),(9,1,'zach',1535313672);
 /*!40000 ALTER TABLE `devicedata` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -67,7 +68,7 @@ CREATE TABLE `devices` (
 
 LOCK TABLES `devices` WRITE;
 /*!40000 ALTER TABLE `devices` DISABLE KEYS */;
-INSERT INTO `devices` VALUES (1,'iot1','ESP temp sensor','esp8266','192.168.0.66','',1),(2,'iot2','RGB Light','esp8266','192.168.0.80','',1);
+INSERT INTO `devices` VALUES (1,'iot1','ESP temp sensor','esp8266','192.168.0.66','e2rD92si9jOQASuZqtmb',1),(2,'iot2','RGB Light','esp8266','192.168.0.80','St71SwF9CZPPo8NritZJ',1);
 /*!40000 ALTER TABLE `devices` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,10 +87,11 @@ CREATE TABLE `instances` (
   `device` int(11) NOT NULL,
   `direction` varchar(5) DEFAULT NULL,
   `url` varchar(100) DEFAULT NULL,
+  `display` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `device` (`device`),
   CONSTRAINT `instances_ibfk_1` FOREIGN KEY (`device`) REFERENCES `devices` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,7 +100,34 @@ CREATE TABLE `instances` (
 
 LOCK TABLES `instances` WRITE;
 /*!40000 ALTER TABLE `instances` DISABLE KEYS */;
+INSERT INTO `instances` VALUES (1,'iot1-temp','Temp in Living Room','temp',1,'in','',NULL),(2,'iot2-temp','Upstairs Temp','temp',2,'in','',1);
 /*!40000 ALTER TABLE `instances` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL DEFAULT '',
+  `active` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -110,4 +139,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-24 18:32:44
+-- Dump completed on 2018-09-05 11:22:11
