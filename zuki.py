@@ -21,12 +21,14 @@ def index():
     context = { 'menu': 'home', 'records' : records, 'instances': instances}
     return render_template('index.html', context = context)
 
-@app.route('/getinstance/<id>')
-def getinstance(id):
+@app.route('/getinstance/<id>', methods=['GET','POST'])
+def getinstancechart(id):
     print("getting ID " + str(id))
-    current_value = Devicedata.query.filter(Devicedata.device==str(id)).order_by(Devicedata.timestamp.desc()).first()
-    print(current_value.data)
-    return "<h1>" + str(current_value.data) + "&deg;c</h1><br/><time>"+time.strftime("%H:%M:%S", time.gmtime(current_value.timestamp))+"</time>"
+    current_value = Devicedata.query.filter(Devicedata.device==str(id)).order_by(Devicedata.timestamp.desc()).limit(30).all()
+    current = current_value[-1].data
+    values = ",".join( [ x.data for x in current_value ])
+    timestamps = ",".join( [ str(x.timestamp) for x in current_value ])
+    return '{"current":"'+str(current)+'", "values": "'+values+'", "timestamps": "'+timestamps+'"}'
     pass
 
 @app.route('/adddevice')

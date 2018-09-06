@@ -7,7 +7,8 @@ jQuery(document).ready(function($) {
             var id = $(item).data('id')
             $.get({url: "/getinstance/"+id, 
                 success: function(result){
-                    $("#ibody-"+id).html(result);
+                    var obj = JSON.parse(result);
+                    $("#ibody-"+id).html(obj.current);
                 }
             });
         }
