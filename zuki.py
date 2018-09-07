@@ -6,11 +6,6 @@ from models import *
 from security import * 
 
 
-###########################################
-# i know the routing can be done better 
-# for now it works.
-###########################################
-
 ## string of 64 random ascii chars
 app_salt = 'ms7kmVj9svyy5dERCdcJ57zKFpgE29YGoUHiQMR3eEIuhB493XhYiPcjRLxbcCls' 
 
@@ -25,7 +20,7 @@ def index():
 def getinstancechart(id):
     print("getting ID " + str(id))
     current_value = Devicedata.query.filter(Devicedata.device==str(id)).order_by(Devicedata.timestamp.desc()).limit(30).all()
-    current = current_value[-1].data
+    current = current_value[0].data
     values = ",".join( [ x.data for x in current_value ])
     timestamps = ",".join( [ str(x.timestamp) for x in current_value ])
     return '{"current":"'+str(current)+'", "values": "'+values+'", "timestamps": "'+timestamps+'"}'
