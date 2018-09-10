@@ -23,7 +23,7 @@ def getinstancechart(id):
     current = current_value[0].data
     devtype = current_value[0].itype
     values = ",".join( [ x.data for x in current_value ])
-    timestamps = ",".join( [ str(x.timestamp) for x in current_value ])
+    timestamps = ",".join( [ time.strftime('%H:%M:%S', time.localtime(x.timestamp)) for x in current_value ])
     return '{"current":"'+str(current)+'","type": "'+str(devtype)+'", "values": "'+values+'", "timestamps": "'+timestamps+'"}'
     pass
 

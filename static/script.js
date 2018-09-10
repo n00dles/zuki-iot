@@ -9,18 +9,15 @@ jQuery(document).ready(function($) {
                 success: function(result){
                     var obj = JSON.parse(result);
                     var values =  obj.values.split(',');
-                    
+                    var timestamps =  obj.timestamps.split(',');
+                                        
                     $("#ibody-"+id).html(obj.current+"("+obj.type+")");
-                    console.log("VALUES: " + values);
-                    console.log(values.length);
-                    values.forEach(element => {
-                        console.log(element);
-                    });
+
                     var ctx = document.getElementById("chart-"+id);
                     var myChart = new Chart(ctx, {
                         type: 'line',
                             data: {
-                                labels: [16.00, 16.30, 17.00, 17.30,18.00, 18.30, 19.00, 19.30],
+                                labels: timestamps,
                                 datasets: [{
                                     label: 'temp',
                                     borderColor: 'ff0000',
@@ -37,3 +34,28 @@ jQuery(document).ready(function($) {
     )
 })
 });
+
+
+function formatDate(date, fmt) {
+    function pad(value) {
+        return (value.toString().length < 2) ? '0' + value : value;
+    }
+    return fmt.replace(/%([a-zA-Z])/g, function (_, fmtCode) {
+        switch (fmtCode) {
+        case 'Y':
+            return date.getUTCFullYear();
+        case 'M':
+            return pad(date.getUTCMonth() + 1);
+        case 'd':
+            return pad(date.getUTCDate());
+        case 'H':
+            return pad(date.getUTCHours());
+        case 'm':
+            return pad(date.getUTCMinutes());
+        case 's':
+            return pad(date.getUTCSeconds());
+        default:
+            throw new Error('Unsupported format code: ' + fmtCode);
+        }
+    });
+}
