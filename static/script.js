@@ -10,7 +10,7 @@ jQuery(document).ready(function($) {
                     var obj = JSON.parse(result);
                     var values =  obj.values.split(',');
                     
-                    $("#ibody-"+id).html(obj.current);
+                    $("#ibody-"+id).html(obj.current+"("+obj.type+")");
                     console.log("VALUES: " + values);
                     console.log(values.length);
                     values.forEach(element => {

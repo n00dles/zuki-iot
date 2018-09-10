@@ -19,14 +19,21 @@ def index():
 @app.route('/getinstance/<id>', methods=['GET','POST'])
 def getinstancechart(id):
     print("getting ID " + str(id))
-    current_value = Devicedata.query.filter(Devicedata.device==str(id)).order_by(Devicedata.timestamp.desc()).limit(30).all()
+    current_value = db.session.query(Devicedata.id, Instances.itype, Devicedata.id, Devicedata.timestamp, Devicedata.data, Devicedata.device).outerjoin(Instances).filter(Devicedata.device==str(id)).order_by(Devicedata.timestamp.desc()).limit(30).all()
     current = current_value[0].data
+    devtype = current_value[0].itype
     values = ",".join( [ x.data for x in current_value ])
     timestamps = ",".join( [ str(x.timestamp) for x in current_value ])
-    return '{"current":"'+str(current)+'", "values": "'+values+'", "timestamps": "'+timestamps+'"}'
+    return '{"current":"'+str(current)+'","type": "'+str(devtype)+'", "values": "'+values+'", "timestamps": "'+timestamps+'"}'
     pass
 
+@app.route('/logout')
+def logout():
+    pass
+
+
 @app.route('/adddevice')
+@login_required
 def adddevice():
     context = { 'menu': 'adddevice'}
     return render_template('adddevice.html', context=context)
