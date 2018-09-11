@@ -8,23 +8,24 @@ jQuery(document).ready(function($) {
             $.get({url: "/getinstance/"+id, 
                 success: function(result){
                     var obj = JSON.parse(result);
-                    var values =  obj.values.split(',');
-                    var timestamps =  obj.timestamps.split(',');
                                         
                     $("#ibody-"+id).html(obj.current+"("+obj.type+")");
-
-                    var ctx = document.getElementById("chart-"+id);
-                    var myChart = new Chart(ctx, {
-                        type: 'line',
-                            data: {
-                                labels: timestamps,
-                                datasets: [{
-                                    label: 'temp',
-                                    borderColor: 'ff0000',
-                                    data: values,
-                                    fill: false,
-                                }]
-			
+                    if (obj.current!="none"){
+                        var values =  obj.values.split(',');
+                        var timestamps =  obj.timestamps.split(',');
+                        var ctx = document.getElementById("chart-"+id);
+                        var myChart = new Chart(ctx, {
+                            type: 'line',
+                                data: {
+                                    labels: timestamps,
+                                    datasets: [{
+                                        label: 'temp',
+                                        borderColor: 'ff0000',
+                                        data: values,
+                                        fill: false,
+                                    }]
+                
+                            }
                         }
                     }
               

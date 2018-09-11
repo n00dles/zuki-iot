@@ -20,6 +20,8 @@ def index():
 def getinstancechart(id):
     print("getting ID " + str(id))
     current_value = db.session.query(Devicedata.id, Instances.itype, Devicedata.id, Devicedata.timestamp, Devicedata.data, Devicedata.device).outerjoin(Instances).filter(Devicedata.device==str(id)).order_by(Devicedata.timestamp.desc()).limit(30).all()
+    if current_value is None:
+            return '{"current":"none","type": "", "values": "", "timestamps": ""}'
     current = current_value[0].data
     devtype = current_value[0].itype
     values = ",".join( [ x.data for x in current_value ])
