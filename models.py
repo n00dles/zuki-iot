@@ -12,7 +12,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://zuki:MyPassW0rd@localhost/flaskapp'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['CSRF_ENABLED'] = True
-app.config['SECRET_KEY'] = "SuperSecretKey"
+app.config['SECRET_KEY'] = "SuperSecretKeySuperSecretKeySuperSecretKeySuperSecretKey"
 
 
 # Flask-User settings

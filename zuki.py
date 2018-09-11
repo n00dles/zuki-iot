@@ -20,8 +20,8 @@ def index():
 def getinstancechart(id):
     print("getting ID " + str(id))
     current_value = db.session.query(Devicedata.id, Instances.itype, Devicedata.id, Devicedata.timestamp, Devicedata.data, Devicedata.device).outerjoin(Instances).filter(Devicedata.device==str(id)).order_by(Devicedata.timestamp.desc()).limit(30).all()
-    if current_value is None:
-            return '{"current":"none","type": "", "values": "", "timestamps": ""}'
+    if not current_value:
+        return '{"current":"no data","type": "", "values": "", "timestamps": ""}'
     current = current_value[0].data
     devtype = current_value[0].itype
     values = ",".join( [ x.data for x in current_value ])
@@ -35,7 +35,6 @@ def logout():
 
 
 @app.route('/adddevice')
-@login_required
 def adddevice():
     context = { 'menu': 'adddevice'}
     return render_template('adddevice.html', context=context)
@@ -46,10 +45,10 @@ def processd():
     desc = request.form['desc']
     devtype = request.form['devtype']
     ipaddress = request.form['ipaddress']
-    hashkey=hashkey(20)
+    hashk=hashkey(20)
     display = 1
 
-    device = Devices(name=name, desc=desc, devtype=devtype, ipaddress=ipaddress, hashkey=hashkey, display=display)
+    device = Devices(name=name, desc=desc, devtype=devtype, ipaddress=ipaddress, hashkey=hashk, display=display)
     db.session.add(device)
     db.session.commit()
     records = db.session.query(Devices.name, Devices.desc, Devices.ipaddress, db.func.count(Instances.device).label("num")).outerjoin(Instances).group_by(Devices.id).filter(Devices.display==1)

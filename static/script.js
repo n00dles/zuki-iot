@@ -26,10 +26,10 @@ jQuery(document).ready(function($) {
                                     }]
                 
                             }
-                        }
+                        })
                     }
               
-                )
+                
             }
         }
     )
